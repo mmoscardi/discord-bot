@@ -103,23 +103,6 @@ java -jar discord-bot-educativo-1.0.0.jar
 !ayuda [comando]  # Ayuda específica
 ```
 
-## 🎓 Valor Educativo
-
-### **Conceptos Demostrados**
-- ✅ **Jerarquía de clases** con herencia clara
-- ✅ **Polimorfismo** en acción con diferentes comandos
-- ✅ **Encapsulamiento** de datos y funcionalidad
-- ✅ **Interfaces** para contratos de diseño
-- ✅ **Patrones de diseño** (Command, Template Method, Factory)
-- ✅ **Separación de responsabilidades**
-- ✅ **Código limpio** y mantenible
-
-### **Experiencia Práctica**
-- 🔧 **Desarrollo real** con herramientas profesionales
-- 🎯 **Proyecto funcional** en entorno conocido
-- 👥 **Trabajo colaborativo** entre estudiantes
-- 📈 **Iteración y mejora** continua del código
-
 ## � Extensibilidad
 
 El proyecto está diseñado para ser **fácilmente extensible**:
@@ -137,26 +120,6 @@ public class ComandoNuevo extends ComandoBase {
     }
 }
 ```
-
-## 🏆 Casos de Uso
-
-### **🏫 En el Aula**
-- Demostración en vivo de conceptos POO
-- Ejercicios prácticos progresivos  
-- Análisis de código real
-- Proyectos colaborativos
-
-### **� Autoestudio**
-- Organización personal de materias
-- Seguimiento de progreso diario
-- Práctica con comandos reales
-- Comprensión de arquitectura
-
-### **� Trabajo en Equipo**
-- Servidor Discord por materia
-- Competencias amigables
-- Comunicación centralizada
-- Motivación grupal
 
 ## 🤝 Contribuir
 
@@ -176,15 +139,5 @@ Este proyecto está diseñado para **ser mejorado por estudiantes**:
 - 👥 **Comunidad colaborativa**
 
 ---
-
-## 🌟 ¿Por qué este proyecto?
-
-> *"La mejor manera de aprender POO es viendo conceptos abstractos aplicados en proyectos reales que resuelven problemas cotidianos."*
-
-Este bot demuestra que **POO no es solo teoría** - es una herramienta poderosa para crear aplicaciones útiles y mantenibles.
-
----
-
-**🎊 ¡Aprende POO creando algo que realmente vas a usar!**
 
 **🚀 Comienza con la [Guía de Instalación](docs/INSTALACION.md)**
