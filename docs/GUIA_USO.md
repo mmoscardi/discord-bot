@@ -1,50 +1,18 @@
-# 📖 G## 🤖 Funcionalidades Automáticas
-
-### **👋 Bienvenida Automática**
-
-El bot detecta automáticamente cuando un nuevo usuario se une al servidor y:
-
-1. **🎯 Busca el canal adecuado**:
-   - Prioriza el canal `#bienvenida` si existe
-   - Si no existe, usa el canal `#general`
-
-2. **📝 Envía mensaje completo**:
-   - Saludo personalizado mencionando al usuario
-   - Lista completa de todos los comandos disponibles
-   - Consejos para comenzar a usar el bot
-   - Información sobre el propósito educativo
-
-3. **📊 Registro en consola**:
-   - Confirma cuando un usuario se une
-   - Registra si el mensaje fue enviado exitosamente
-
-**Ejemplo de mensaje automático:**
-```
-🎉 ¡Bienvenido/a al servidor educativo! 🎉
-
-Hola @NuevoUsuario, estamos muy felices de tenerte aquí.
-Este servidor está diseñado para ayudarte a organizar tus estudios...
-
-📚 COMANDOS DISPONIBLES:
-[Lista completa de comandos con ejemplos]
-
-💡 ¡Consejos para empezar!
-1. Prueba crear tu primera materia...
-```
-
-## 📝 Comandos Manualesía de Uso - Bot Educativo Discord
+# 📖 Guía de Uso - Bot Educativo Discord
 
 ## 🎯 Introducción
 
-El Bot Educativo está diseñado para ayudar a estudiantes y profesores a gestionar tareas, materias y seguimiento de progreso académico en Discord.
+El Bot Educativo está diseñado para ayudar a estudiantes y profesores a gestionar tareas, materias y seguimiento de progreso académico en Discord. Utiliza una arquitectura de **comandos unificados** que agrupa funcionalidades relacionadas.
 
-## 🚀 Comandos Disponibles
+## � Comandos Unificados Disponibles
 
-### **📚 Gestión de Materias**
+### **� ComandoMaterias - Gestión de Materias (`!materia`)**
+
+El comando `!materia` unifica toda la gestión de materias académicas en un solo lugar.
 
 #### **Crear Materia**
 ```
-!materia crear CODIGO "Nombre" ["Descripción"] ["Profesor"]
+!materia crear <CODIGO> "<Nombre>" ["Descripción"] ["Profesor"]
 ```
 
 **Ejemplos:**
@@ -80,13 +48,56 @@ El Bot Educativo está diseñado para ayudar a estudiantes y profesores a gestio
 **Ejemplos:**
 ```
 !materia tareas MAT101              # Todas las tareas
-!materia tareas PROG pendientes     # Solo pendientes
-!materia tareas FIS201 completadas  # Solo completadas
+```
+!materia crear MAT101 "Matemáticas Básicas"
+!materia crear FIS201 "Física General" "Mecánica y termodinámica" "Dr. García"
+!materia crear PROG "Programación" "Java y POO"
+```
+
+#### **Listar Materias**
+```
+!materia listar [filtro]
+```
+
+**Opciones de filtro:**
+- `activas` - Solo materias activas
+- `archivadas` - Solo materias archivadas
+- `detalle` - Vista completa con estadísticas
+
+**Ejemplos:**
+```
+!materia listar              # Todas las materias
+!materia listar activas      # Solo activas
+!materia listar detalle      # Vista detallada con estadísticas
+```
+
+#### **Ver Tareas de una Materia**
+```
+!materia tareas <CODIGO> [filtro]
+```
+
+**Ejemplos:**
+```
+!materia tareas PROG              # Todas las tareas de Programación
+!materia tareas MAT101 pendientes # Solo tareas pendientes
+!materia tareas FIS201 completadas # Solo tareas completadas
+```
+
+#### **Archivar/Desarchivar Materia**
+```
+!materia archivar <CODIGO>
+!materia desarchivar <CODIGO>
+```
+
+**Ejemplos:**
+```
+!materia archivar MAT101    # Archivar materia terminada
+!materia desarchivar FIS201 # Restaurar materia archivada
 ```
 
 #### **Eliminar Materia**
 ```
-!materia eliminar CODIGO
+!materia eliminar <CODIGO>
 ```
 
 **Ejemplo:**
@@ -94,116 +105,216 @@ El Bot Educativo está diseñado para ayudar a estudiantes y profesores a gestio
 !materia eliminar TEST
 ```
 
-⚠️ **Nota**: Solo el creador puede eliminar una materia, y no debe tener tareas asociadas.
+⚠️ **Nota**: Solo se puede eliminar si no tiene tareas asociadas.
 
 ---
 
-### **📝 Gestión de Tareas**
+### **📝 ComandoTareas - Gestión de Tareas (`!tarea`)**
+
+El comando `!tarea` unifica toda la gestión de tareas y asignaciones.
 
 #### **Crear Tarea**
 ```
-!tarea crear "Título" ["Descripción"] [MATERIA]
+!tarea crear "<Título>" ["Descripción"] [MATERIA] [PRIORIDAD]
 ```
+
+**Parámetros:**
+- `"Título"`: Obligatorio, entre comillas
+- `"Descripción"`: Opcional, entre comillas
+- `MATERIA`: Opcional, código de materia
+- `PRIORIDAD`: Opcional, 1=baja, 2=media, 3=alta
 
 **Ejemplos:**
 ```
 !tarea crear "Estudiar capítulo 5"
-!tarea crear "Resolver ejercicios" "Problemas 1-20 del libro" MAT101
-!tarea crear "Preparar examen" "" FIS201
+!tarea crear "Resolver ejercicios" "Problemas 1-20" MAT101 3
+!tarea crear "Preparar examen" "" FIS201 2
 ```
-
-**Parámetros:**
-- `"Título"`: Título de la tarea (obligatorio, entre comillas)
-- `"Descripción"`: Opcional, descripción detallada
-- `MATERIA`: Opcional, código de materia (sin comillas)
 
 #### **Listar Tareas**
 ```
 !tarea listar [filtro]
 ```
 
+**Filtros disponibles:**
+- `pendientes` - Solo tareas no completadas
+- `completadas` - Solo tareas completadas
+- `vencidas` - Solo tareas con fecha vencida
+- `materia <código>` - Tareas de una materia específica
+
 **Ejemplos:**
 ```
-!tarea listar             # Todas las tareas
-!tarea listar pendientes  # Solo pendientes
-!tarea listar completadas # Solo completadas
+!tarea listar                    # Todas las tareas
+!tarea listar pendientes         # Solo pendientes
+!tarea listar materia PROG       # Solo de Programación
 ```
 
 #### **Completar Tarea**
 ```
-!tarea completar NUMERO
+!tarea completar <número>
+```
+
+**Sistema de puntos:**
+- 🏆 **Base**: 10 puntos por tarea
+- 🔥 **Bonus prioridad**: +5 (baja), +10 (media), +15 (alta)
+- 💎 **Total**: 15-25 puntos por tarea
+
+**Ejemplo:**
+```
+!tarea completar 3        # Completa la tarea #3 y gana puntos
+```
+
+#### **Establecer Fecha de Vencimiento**
+```
+!tarea vencimiento <número> <dd/MM/yyyy HH:mm>
 ```
 
 **Ejemplo:**
 ```
-!tarea completar 3        # Completa la tarea número 3
+!tarea vencimiento 1 25/12/2024 23:59
 ```
 
-**Recompensas:**
-- 🏆 **Puntos base**: 10 puntos por tarea
-- 🔥 **Bonus prioridad**: +5 puntos por nivel de prioridad
-- 📈 **Progreso**: Contribuye al nivel del usuario
-
----
-
-### **🏆 Sistema de Puntos**
-
-#### **Ver Puntos Propios**
+#### **Cambiar Prioridad**
 ```
-!puntos
-```
-
-**Respuesta típica:**
-```
-🏆 Tu Progreso Académico
-
-👤 Usuario: @TuNombre
-🎯 Nivel: 3 (245/300 puntos)
-📊 Progreso: ████████░░ 82%
-
-📚 Estadísticas:
-• Tareas completadas: 24
-• Materias activas: 3
-• Racha actual: 7 días
-
-🥇 Materia favorita: Programación (120 puntos)
-
-💡 Consejos Personalizados:
-• ¡Vas bien! Completa más tareas para subir de nivel
-• Prueba ayudar a otros estudiantes para ganar puntos extra
-```
-
-#### **Ver Puntos de Otro Usuario**
-```
-!puntos @usuario
+!tarea prioridad <número> <1-3>
 ```
 
 **Ejemplo:**
 ```
-!puntos @Juan
+!tarea prioridad 2 3      # Cambiar tarea #2 a prioridad alta
+```
+
+#### **Eliminar Tarea**
+```
+!tarea eliminar <número>
+```
+
+**Ejemplo:**
+```
+!tarea eliminar 5         # Eliminar tarea #5
 ```
 
 ---
 
-### **❓ Ayuda y Soporte**
+### **⚙️ ComandoSistema - Sistema y Utilidades (`!sistema`)**
 
-#### **Ayuda General**
-```
-!ayuda
-```
+El comando `!sistema` unifica ayuda, puntos, estadísticas y configuración.
 
-#### **Ayuda Específica**
+#### **Sistema de Ayuda**
 ```
-!ayuda [comando]
+!sistema ayuda [comando]
 ```
 
 **Ejemplos:**
 ```
-!ayuda materia
-!ayuda tarea
-!ayuda puntos
+!sistema ayuda              # Ayuda general completa
+!sistema ayuda materia      # Ayuda específica para materias
+!sistema ayuda tarea        # Ayuda específica para tareas
+!sistema ayuda puntos       # Ayuda sobre sistema de puntos
 ```
 
+#### **Sistema de Puntos**
+```
+!sistema puntos [opción]
+```
+
+**Opciones:**
+- Sin parámetros: Ver tus puntos
+- `@usuario`: Ver puntos de otro usuario
+- `ranking [número]`: Ver ranking del servidor
+
+**Ejemplos:**
+```
+!sistema puntos              # Tus puntos y estadísticas
+!sistema puntos @usuario     # Puntos de otro usuario
+!sistema puntos ranking      # Top 10 del servidor
+!sistema puntos ranking 20   # Top 20 del servidor
+```
+
+**Respuesta típica:**
+```
+🏆 PUNTOS DEL USUARIO
+
+👤 Tus puntos actuales
+💎 147 puntos
+
+📊 Estadísticas:
+• 🏆 Nivel actual: 3
+• � Materia favorita: Programación
+• 🎯 Puntos para siguiente nivel: 53
+• 💚 Estado: Activo
+• 📝 Tareas: 12 completadas, 3 pendientes
+• 🏅 Posición en ranking: #5 de 23
+```
+
+#### **Mensajes de Bienvenida**
+```
+!sistema bienvenida [@usuario]
+```
+
+**Ejemplos:**
+```
+!sistema bienvenida          # Mensaje de bienvenida general
+!sistema bienvenida @nuevo   # Bienvenida específica para usuario
+```
+
+#### **Información del Bot**
+```
+!sistema info
+```
+
+**Muestra:**
+- 🏷️ Versión del bot
+- ⚡ Estado del sistema
+- � Tiempo activo
+- 👨‍💻 Información técnica
+
+#### **Estadísticas Generales**
+```
+!sistema stats
+```
+
+**Muestra estadísticas completas:**
+- 👥 Usuarios registrados y activos
+- 📚 Materias creadas y activas
+- 📝 Tareas totales y completadas
+- 💎 Puntos en circulación
+- ⚡ Estado de todos los sistemas
+
+---
+
+## � Funcionalidades Automáticas
+
+### **👋 Bienvenida Automática**
+
+El bot detecta automáticamente cuando un nuevo usuario se une al servidor y:
+
+1. **🎯 Busca el canal adecuado**:
+   - Prioriza el canal `#bienvenida` si existe
+   - Si no existe, usa el canal `#general`
+
+2. **� Envía mensaje de bienvenida simplificado**:
+   - Saludo personalizado mencionando al usuario
+   - Comandos principales para comenzar
+   - Información básica sobre el bot
+
+3. **📊 Registro en consola**:
+   - Confirma cuando un usuario se une
+   - Registra si el mensaje fue enviado exitosamente
+
+**Ejemplo de mensaje automático:**
+```
+👋 ¡Bienvenido @NuevoUsuario!
+
+🎓 Te damos la bienvenida al Bot Educativo, tu asistente para organizar tus estudios.
+
+🌟 Comienza ahora:
+• !sistema ayuda - Descubre todos los comandos
+• !materia crear - Crea tu primera materia
+• !sistema puntos - Consulta tus puntos
+
+💪 ¡Estamos aquí para ayudarte a alcanzar tus metas académicas!
+```
 ---
 
 ## 📋 Casos de Uso Prácticos
@@ -217,17 +328,161 @@ El Bot Educativo está diseñado para ayudar a estudiantes y profesores a gestio
 !materia crear PROG "Programación" "Java y POO" "Prof. López"
 
 # 2. Verificar materias creadas
-!materia listar
+!materia listar detalle
 
-# 3. Informar a estudiantes
-Los estudiantes pueden crear tareas con:
-!tarea crear "Mi tarea" "Descripción" MAT101
+# 3. Ver ayuda para compartir con estudiantes
+!sistema ayuda materia
 ```
 
 ### **Escenario 2: Estudiante Organizándose**
 
 ```
 # 1. Ver materias disponibles
+!materia listar
+
+# 2. Crear tareas para diferentes materias
+!tarea crear "Estudiar límites" "Capítulo 1-3" MAT101 3
+!tarea crear "Laboratorio de campo eléctrico" "" FIS201 2
+!tarea crear "Proyecto POO" "Sistema de biblioteca" PROG 3
+
+# 3. Establecer fechas de vencimiento
+!tarea vencimiento 1 30/12/2024 23:59
+!tarea vencimiento 3 15/01/2025 18:00
+
+# 4. Ver progreso
+!tarea listar pendientes
+!sistema puntos
+```
+
+### **Escenario 3: Seguimiento de Progreso**
+
+```
+# 1. Completar tareas
+!tarea completar 1    # Gana 25 puntos (prioridad alta)
+!tarea completar 2    # Gana 20 puntos (prioridad media)
+
+# 2. Ver estadísticas personales
+!sistema puntos
+
+# 3. Comparar con otros estudiantes
+!sistema puntos ranking
+
+# 4. Ver estadísticas generales del servidor
+!sistema stats
+```
+
+### **Escenario 4: Gestión de Materias por Semestre**
+
+```
+# Al final del semestre
+!materia archivar MAT101
+!materia archivar FIS201
+
+# Nuevo semestre
+!materia crear MAT201 "Cálculo II" "Integrales" "Prof. Martínez"
+!materia desarchivar PROG    # Continúa el próximo semestre
+
+# Ver todas las materias
+!materia listar detalle
+```
+
+---
+
+## 💡 Consejos y Mejores Prácticas
+
+### **Para Estudiantes**
+
+1. **🎯 Organización**:
+   - Usa códigos descriptivos para materias (`MAT101`, `FIS201`)
+   - Establece prioridades realistas en las tareas
+   - Configura fechas de vencimiento para todas las tareas importantes
+
+2. **🏆 Maximizar Puntos**:
+   - Completa tareas de alta prioridad para más puntos
+   - Mantén un progreso constante para subir de nivel
+   - Consulta tu ranking regularmente para motivarte
+
+3. **📚 Seguimiento**:
+   - Usa `!tarea listar vencidas` para identificar tareas atrasadas
+   - Revisa `!materia tareas CODIGO` para ver progreso por materia
+   - Consulta `!sistema stats` para ver estadísticas generales
+
+### **Para Profesores**
+
+1. **🎓 Configuración Inicial**:
+   - Crea materias con códigos estándar de la institución
+   - Incluye información del profesor en la descripción
+   - Usa `!sistema ayuda` para generar guías para estudiantes
+
+2. **📊 Monitoreo**:
+   - Revisa `!sistema stats` para ver actividad general
+   - Usa `!sistema puntos ranking` para identificar estudiantes destacados
+   - Consulta `!materia tareas CODIGO` para ver progreso por materia
+
+### **Para Administradores**
+
+1. **⚙️ Configuración del Servidor**:
+   - Crea canales `#bienvenida` y `#general` para mensajes automáticos
+   - Configura permisos apropiados para los comandos
+   - Mantén respaldos regulares si usas persistencia
+
+2. **📈 Mantenimiento**:
+   - Monitorea `!sistema info` para verificar estado del bot
+   - Usa `!sistema stats` para análisis de uso
+   - Archiva materias de semestres anteriores regularmente
+
+---
+
+## ❓ Preguntas Frecuentes
+
+### **P: ¿Cómo puedo ver todos los comandos disponibles?**
+R: Usa `!sistema ayuda` para ver la lista completa de comandos con ejemplos.
+
+### **P: ¿Puedo cambiar la prioridad de una tarea después de crearla?**
+R: Sí, usa `!tarea prioridad <número> <1-3>` para cambiar la prioridad.
+
+### **P: ¿Qué pasa si elimino una materia con tareas?**
+R: No puedes eliminar una materia que tiene tareas asociadas. Primero elimina o completa todas las tareas.
+
+### **P: ¿Cómo funciona el sistema de puntos?**
+R: Ganas 10 puntos base + bonus de prioridad (5/10/15) por completar tareas. Usa `!sistema ayuda puntos` para más detalles.
+
+### **P: ¿Puedo ver las tareas de una materia específica?**
+R: Sí, usa `!materia tareas <código>` o `!tarea listar materia <código>`.
+
+### **P: ¿Se guardan los datos si reinicio el bot?**
+R: Actualmente los datos se mantienen en memoria. En producción se implementaría persistencia.
+
+### **P: ¿Puedo cambiar el prefijo de comandos?**
+R: Actualmente usa `!` pero se puede configurar en el código fuente.
+
+---
+
+## 🔧 Configuración Avanzada
+
+### **Personalización de Mensajes**
+Los mensajes del bot se pueden personalizar modificando directamente cada comando unificado:
+- `ComandoMaterias.java` - Mensajes relacionados con materias
+- `ComandoTareas.java` - Mensajes relacionados con tareas  
+- `ComandoSistema.java` - Mensajes de ayuda, puntos y sistema
+
+### **Agregar Nuevas Funcionalidades**
+Para agregar nuevos subcomandos:
+1. Añade un nuevo `case` al `switch` del comando correspondiente
+2. Implementa el método específico
+3. Actualiza la documentación de uso en el constructor
+
+### **Integración con Bases de Datos**
+Para producción, implementa la interfaz `GestorDatos` con:
+- Conexión a base de datos (MySQL, PostgreSQL)
+- Serialización JSON para archivos
+- Servicios en la nube (Firebase, AWS DynamoDB)
+
+---
+
+**🎓 El Bot Educativo está diseñado para crecer con las necesidades de tu comunidad educativa. ¡Úsalo, personalízalo y mejóralo según tus requerimientos!**
+
+Para información técnica detallada, consulta la [Estructura del Proyecto](ESTRUCTURA.md).
 !materia listar
 
 # 2. Crear tareas para la semana

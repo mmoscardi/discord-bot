@@ -161,6 +161,27 @@ public class Usuario {
     }
     
     /**
+     * Quita puntos al usuario y actualiza su nivel
+     * Encapsula la lógica de penalización por puntos
+     * 
+     * @param puntosAQuitar Cantidad de puntos a quitar
+     */
+    public void quitarPuntos(int puntosAQuitar) {
+        if (puntosAQuitar < 0) {
+            throw new IllegalArgumentException("No se pueden quitar puntos negativos");
+        }
+        
+        // Actualizar puntos totales (no permitir puntos negativos)
+        this.puntos = Math.max(0, this.puntos - puntosAQuitar);
+        
+        // Recalcular nivel
+        actualizarNivel();
+        
+        // Actualizar actividad
+        actualizarActividad();
+    }
+    
+    /**
      * Calcula y actualiza el nivel basado en los puntos totales
      * Método privado que encapsula la lógica de nivelación
      */

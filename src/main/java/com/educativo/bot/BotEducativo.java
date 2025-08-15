@@ -3,11 +3,10 @@ package com.educativo.bot;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.educativo.bot.comandos.ComandoAyuda;
-import com.educativo.bot.comandos.ComandoBienvenida;
-import com.educativo.bot.comandos.ComandoMateria;
-import com.educativo.bot.comandos.ComandoPuntos;
-import com.educativo.bot.comandos.ComandoTarea;
+import com.educativo.bot.comandos.ComandoDocente;
+import com.educativo.bot.comandos.ComandoMaterias;
+import com.educativo.bot.comandos.ComandoSistema;
+import com.educativo.bot.comandos.ComandoTareas;
 import com.educativo.bot.interfaces.Comando;
 import com.educativo.bot.interfaces.GestorDatos;
 import com.educativo.bot.servicios.GestorDatosArchivo;
@@ -126,11 +125,14 @@ public class BotEducativo extends ListenerAdapter {
             }
             
             if (canalBienvenida != null) {
-                // Crear mensaje de bienvenida usando el comando existente
-                ComandoBienvenida comandoBienvenida = new ComandoBienvenida();
-                String mensajeBienvenida = comandoBienvenida.crearMensajeBienvenidaCompleto(
-                    event.getUser().getId()
-                );
+                // Crear mensaje de bienvenida simple
+                String mensajeBienvenida = "👋 **¡Bienvenido " + "<@" + event.getUser().getId() + ">!" + "**\n\n" +
+                    "🎓 Te damos la bienvenida al **Bot Educativo**, tu asistente para organizar tus estudios.\n\n" +
+                    "🌟 **Comienza ahora:**\n" +
+                    "• `!sistema ayuda` - Descubre todos los comandos\n" +
+                    "• `!materia crear` - Crea tu primera materia\n" +
+                    "• `!sistema puntos` - Consulta tus puntos\n\n" +
+                    "💪 ¡Estamos aquí para ayudarte a alcanzar tus metas académicas!";
                 
                 // Enviar mensaje al canal
                 canalBienvenida.sendMessage(mensajeBienvenida).queue();
@@ -167,7 +169,7 @@ public class BotEducativo extends ListenerAdapter {
             Comando comando = comandos.get(nombreComando);
             
             if (comando == null) {
-                enviarMensaje(event, "❌ Comando no encontrado. Usa `!ayuda` para ver comandos disponibles.");
+                enviarMensaje(event, "❌ Comando no encontrado. Usa `!sistema ayuda` para ver comandos disponibles.");
                 return;
             }
             
@@ -201,23 +203,24 @@ public class BotEducativo extends ListenerAdapter {
      * Demuestra POLIMORFISMO al tratar todos los comandos como objetos Comando
      */
     private void registrarComandos() {
-        // Crear instancias de comandos - POLIMORFISMO en acción
+        // Crear instancias de comandos unificados por funcionalidad - POLIMORFISMO en acción
         Comando[] comandosDisponibles = {
-            new ComandoAyuda(),
-            new ComandoTarea(),
-            new ComandoPuntos(),
-            new ComandoBienvenida(),
-            new ComandoMateria(),  // Comando unificado para todas las funciones de materias
-            // Aquí podrías añadir más comandos que implementen la interfaz Comando
+            new ComandoMaterias(),        // Comandos de gestión de materias académicas
+            new ComandoTareas(),          // Comandos de gestión de tareas y asignaciones
+            new ComandoSistema(), 
+            new ComandoDocente(),         // Comandos de gestión de docentes
+            // Aquí podrías añadir más grupos de comandos que implementen la interfaz Comando
         };
-        
+
         // Registrar cada comando usando POLIMORFISMO
         for (Comando comando : comandosDisponibles) {
             comandos.put(comando.getNombre(), comando);
-            System.out.println("✅ Comando registrado: " + comando.getNombre());
+            System.out.println("✅ Grupo de comandos registrado: " + comando.getNombre());
         }
     }
     
+
+
     /**
      * MÉTODOS: Envía un mensaje al canal
      * Encapsula la lógica de envío de mensajes
